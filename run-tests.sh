@@ -2,7 +2,6 @@
 
 function main() {
 	# Create alias to the server
-	#mc alias set myminio http://64.71.151.78:59000 minioadmin minioadmin
 	mc alias set myminio "{MINIO_ENDPOINT}" "${MINIO_ACCESS_KEY}" "${MINIO_SECRET_KEY}"
 
 	COUNT=0

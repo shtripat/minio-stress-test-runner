@@ -6,7 +6,7 @@ TEST_DATA_DIR=${TEST_DATA_DIR:-/enterprise-stress-test/data}
 ROOT_DIR="$PWD"
 
 BASE_LOG_DIR="$ROOT_DIR/log"
-LOG_FILE="log.json"
+LOG_FILE="test.log"
 ERROR_FILE="error.log"
 mkdir -p "$BASE_LOG_DIR"
 
@@ -24,6 +24,7 @@ function humanize_time() {
         echo "$seconds seconds"
 }
 
+# Start the test
 start=$(date +%s)
 ./run-tests.sh 1>>"${BASE_LOG_DIR}/${LOG_FILE}" 2>"${BASE_LOG_DIR}/${ERROR_FILE}"
 rv=$?

@@ -11,6 +11,8 @@ COPY . /enterprise-stress-test
 
 WORKDIR /enterprise-stress-test
 
+RUN wget -nv -O /usr/local/bin/mc https://dl.min.io/client/mc/release/linux-amd64/mc && chmod +x /usr/local/bin/mc
+
 RUN /enterprise-stress-test/create-data-files.sh
 
 ENTRYPOINT ["/enterprise-stress-test/entrypoint.sh"]

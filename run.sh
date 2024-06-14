@@ -1,8 +1,5 @@
 #!/bin/bash
 
-ONTAINER_ID=$(grep -o -e '[0-f]\{12,\}' /proc/1/cpuset | awk '{print substr($1, 1, 12)}')
-TEST_DATA_DIR=${TEST_DATA_DIR:-/enterprise-stress-test/data}
-
 ROOT_DIR="$PWD"
 
 BASE_LOG_DIR="$ROOT_DIR/log"
@@ -35,4 +32,3 @@ if [ "$rv" -eq 0 ]; then
 else
         echo "FAILED in $duration"
 fi
-return $rv

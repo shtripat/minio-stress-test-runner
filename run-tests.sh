@@ -1,5 +1,8 @@
 #!/bin/bash
 
+TEST_DATA_DIR=${TEST_DATA_DIR:-/enterprise-stress-test/data}
+ROOT_DIR="$PWD"
+
 function main() {
 	# Create alias to the server
 	mc alias set myminio "${MINIO_ENDPOINT}" "${MINIO_ACCESS_KEY}" "${MINIO_SECRET_KEY}"
@@ -12,6 +15,7 @@ function main() {
 	while true; do
 		# If its 2 days (48 hrs * 60 min) and sleep of 10m each for every loop
 		if [ ${COUNT} -eq 288 ]; then
+		#if [ ${COUNT} -eq 1 ]; then
 			break
 		fi
 		# Create bucket
@@ -21,7 +25,6 @@ function main() {
 
 		# Load few versions of the objects to the bucket
 		for i in {1..5}; do
-			mc cp "${TEST_DATA_DIR}/datafile-0-b" myminio/stress-test-bucket-1
 			mc cp "${TEST_DATA_DIR}/datafile-0-b" myminio/stress-test-bucket-1
 			mc cp "${TEST_DATA_DIR}/datafile-1-b" myminio/stress-test-bucket-1
 			mc cp "${TEST_DATA_DIR}/datafile-1-kB" myminio/stress-test-bucket-1
@@ -50,7 +53,6 @@ function main() {
 
 		# Delete the objects
 		mc rm myminio/stress-test-bucket-1/datafile-0-b
-		mc rm myminio/stress-test-bucket-1/datafile-0-b
 		mc rm myminio/stress-test-bucket-1/datafile-1-b
 		mc rm myminio/stress-test-bucket-1/datafile-1-kB
 		mc rm myminio/stress-test-bucket-1/datafile-10-kB
@@ -78,17 +80,20 @@ function main() {
 		# Try to load a million objects to new bucket
 		mc mb myminio/stress-test-bucket-2
 		for i in {1..1000000}; do
+		#for i in {1..100}; do
 			echo "Hello World" | mc pipe myminio/stress-test-bucket-2/obj$i
 		done
 
 		# Try to stat the objects
 		for i in {1..1000000}; do
+		#for i in {1..100}; do
 			mc stat myminio/stress-test-bucket-2/obj$i
 		done
 
 		# Try to download the objects
 		mkdir ${ROOT_DIR}/tmp
 		for i in {1..1000000}; do
+		#for i in {1..100}; do
 			mc get myminio/stress-test-bucket-2/obj$i ${ROOT_DIR}/tmp/obj$i
 		done
 		# Print downloaded objects count
